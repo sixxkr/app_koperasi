@@ -1,0 +1,107 @@
+import 'dart:convert';
+import 'package:app_koperasi/pages/home/admin/edit_barang.dart';
+import 'package:app_koperasi/pages/home/admin/tambah_produk.dart';
+import 'package:app_koperasi/services/api.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class BarangAdmin extends StatefulWidget {
+  @override
+  _BarangAdminPageState createState() => _BarangAdminPageState();
+}
+
+class _BarangAdminPageState extends State<BarangAdmin> {
+  List produkList = [];
+  bool isLoading = true;
+
+  Future<void> fetchProduk() async {
+    final response = await http.get(Uri.parse('$baseUrl/produk'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        produkList = data;
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal mengambil data produk')),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProduk();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Daftar Produk')),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: produkList.length,
+              itemBuilder: (context, index) {
+                final produk = produkList[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  child: ListTile(
+                    leading: produk['gambar'] != null
+                        ? Image.network(
+                            '$baseUrl/static/images/${produk['gambar']}',
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          )
+                        : Icon(Icons.image, size: 50),
+                    title: Text(produk['nama']),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Harga: Rp${produk['harga']}'),
+                        produk['stock'] > 0
+                            ? Text("Stok: ${produk['stock']}")
+                            : Text(
+                                "Out of Stock",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              )
+                      ],
+                    ),
+                    trailing: Icon(Icons.edit),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              EditProdukPage(idProduk: produk['id_produk']),
+                        ),
+                      ).then((_) => fetchProduk());
+                    },
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TambahProdukPage(),
+            ),
+          );
+          fetchProduk(); // refresh setelah tambah
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blueAccent,
+        tooltip: 'Tambah Anggota',
+      ),
+    );
+  }
+}
