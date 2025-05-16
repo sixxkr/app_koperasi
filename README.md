@@ -68,7 +68,7 @@ flutter run
 | GET    | /keranjang/<id> | Ambil isi keranjang user |
 | POST   | /transaksi      | Lanjutkan ke transaksi   |
 | GET    | /transaksi/<id> | Riwayat transaksi        |
-| GET    | /invoice/<id>   | Lihat detail transaksi   |
+| GET    | //transaksi/detail/<id>   | Lihat detail transaksi   |
 
 ---
 
