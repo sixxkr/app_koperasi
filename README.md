@@ -59,6 +59,7 @@ flutter run
 
 ## 🧪 Endpoint API (Contoh)
 
+<<<<<<< HEAD
 | Method | Endpoint               | Deskripsi                |
 | ------ | ---------------------- | ------------------------ |
 | GET    | /produk                | Ambil semua produk       |
@@ -69,6 +70,18 @@ flutter run
 | POST   | /transaksi             | Lanjutkan ke transaksi   |
 | GET    | /transaksi/<id>        | Riwayat transaksi        |
 | GET    | /transaksi/detail/<id> | Lihat detail transaksi   |
+=======
+| Method | Endpoint        | Deskripsi                |
+| ------ | --------------- | ------------------------ |
+| GET    | /produk         | Ambil semua produk       |
+| POST   | /register       | Registrasi pengguna      |
+| POST   | /login          | Login & terima token     |
+| POST   | /checkout       | Tambah ke keranjang      |
+| GET    | /keranjang/<id> | Ambil isi keranjang user |
+| POST   | /transaksi      | Lanjutkan ke transaksi   |
+| GET    | /transaksi/<id> | Riwayat transaksi        |
+| GET    | /transaksi/detail/<id>   | Lihat detail transaksi   |
+>>>>>>> 7f72ac10b8d462a1ebda614a72205816868db763
 
 ---
 
