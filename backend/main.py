@@ -301,6 +301,7 @@ def get_profile(user_id):
 
 @app.route('/users/update/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
+
     db = get_db_connection()
     cursor = db.cursor(dictionary=True)
 
@@ -337,6 +338,7 @@ def update_user(user_id):
     db.commit()
     cursor.close()
     return jsonify({"message": "User updated successfully"})
+
 # ==================== KERANJANG ====================
 
 @app.route('/keranjang/<int:user_id>', methods=['GET'])

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:app_koperasi/pages/home/user/keranjang.dart';
 import 'package:app_koperasi/services/auth_service.dart';
 import 'package:app_koperasi/services/produk_service.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final int productId;
@@ -25,6 +26,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   int? userId;
   int jumlah = 1;
   bool isLoading = true;
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   @override
   void initState() {
@@ -127,7 +133,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                       ),
                       Text(
-                        "Rp${product!['harga']}",
+                        formatRupiah(product!['harga']),
                         style: const TextStyle(
                           fontSize: 18,
                           color: Colors.green,

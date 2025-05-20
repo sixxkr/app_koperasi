@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app_koperasi/services/produk_service.dart';
 import 'package:app_koperasi/services/auth_service.dart';
 import 'package:app_koperasi/pages/home/user/produk_detail_pages.dart';
+import 'package:intl/intl.dart';
 
 class UserHome extends StatefulWidget {
   @override
@@ -19,6 +20,11 @@ class _UserHomeState extends State<UserHome> {
   int selectedKategori = 0;
   String searchQuery = '';
   int? userId;
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   @override
   void initState() {
@@ -177,7 +183,7 @@ class _UserHomeState extends State<UserHome> {
                                   Text(produk['nama'],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text("Rp${produk['harga']}"),
+                                  Text(formatRupiah(produk['harga'])),
                                   produk['stock'] > 0
                                       ? Text("Stok: ${produk['stock']}")
                                       : Text("Out of Stock",
@@ -276,7 +282,7 @@ class _UserHomeState extends State<UserHome> {
                                 Text(produk['nama'],
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
-                                Text("Rp${produk['harga']}"),
+                                Text(formatRupiah(produk['harga'])),
                                 produk['stock'] > 0
                                     ? Text("Stok: ${produk['stock']}")
                                     : Text("Out of Stock",

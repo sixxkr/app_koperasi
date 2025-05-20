@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../services/keranjang_service.dart';
+import 'package:intl/intl.dart';
 
 class TransaksiPage extends StatefulWidget {
   final int userId;
@@ -21,6 +22,11 @@ class _TransaksiPageState extends State<TransaksiPage> {
   final service = KeranjangService();
   Set<int> selectedCheckoutIds = {};
   String metodePembayaran = "Cash";
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   bool isLoadingTransaksi = true;
   bool isLoadingKeranjang = true;
@@ -164,7 +170,7 @@ class _TransaksiPageState extends State<TransaksiPage> {
                     },
                     title: Text(item['nama_produk'] ?? 'Nama Produk'),
                     subtitle: Text(
-                        'Jumlah: ${item['jumlah']} - Subtotal: Rp ${item['subtotal']}'),
+                        'Jumlah: ${item['jumlah']} - Subtotal: ${formatRupiah(item['subtotal'])}'),
                     secondary: IconButton(
                       icon: Icon(Icons.delete, color: Colors.red),
                       onPressed: () => hapusItem(item['id_checkout']),

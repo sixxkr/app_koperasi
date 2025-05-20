@@ -3,6 +3,7 @@ import 'package:app_koperasi/pages/home/kasir/edit_barang_page.dart';
 import 'package:app_koperasi/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class BarangKasir extends StatefulWidget {
   @override
@@ -12,6 +13,11 @@ class BarangKasir extends StatefulWidget {
 class _BarangKasirPageState extends State<BarangKasir> {
   List produkList = [];
   bool isLoading = true;
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   Future<void> fetchProduk() async {
     final response = await http.get(Uri.parse('$baseUrl/produk'));
@@ -62,7 +68,7 @@ class _BarangKasirPageState extends State<BarangKasir> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Harga: Rp${produk['harga']}'),
+                        Text('Harga: ${formatRupiah(produk['harga'])}'),
                         produk['stock'] > 0
                             ? Text("Stok: ${produk['stock']}")
                             : Text(

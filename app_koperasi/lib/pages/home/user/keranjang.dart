@@ -1,6 +1,7 @@
 import 'package:app_koperasi/services/api.dart';
 import 'package:flutter/material.dart';
 import '../../../services/keranjang_service.dart';
+import 'package:intl/intl.dart';
 
 class KeranjangPage extends StatefulWidget {
   final int userId;
@@ -14,6 +15,11 @@ class KeranjangPage extends StatefulWidget {
 class _KeranjangPageState extends State<KeranjangPage> {
   List<dynamic> keranjang = [];
   final service = KeranjangService();
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   @override
   void initState() {
@@ -65,7 +71,7 @@ class _KeranjangPageState extends State<KeranjangPage> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Rp${item['subtotal']}'),
+                      Text(formatRupiah(item['harga'])),
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () => hapusItem(item['id_checkout']),

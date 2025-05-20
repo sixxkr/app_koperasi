@@ -3,6 +3,7 @@ import 'package:app_koperasi/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class DetailTransaksiPage extends StatefulWidget {
   final int idTransaksi;
@@ -10,12 +11,17 @@ class DetailTransaksiPage extends StatefulWidget {
   DetailTransaksiPage({required this.idTransaksi});
 
   @override
-  DetailTransaksiPageState createState() => DetailTransaksiPageState();
+  _DetailTransaksiPageState createState() => _DetailTransaksiPageState();
 }
 
-class DetailTransaksiPageState extends State<DetailTransaksiPage> {
+class _DetailTransaksiPageState extends State<DetailTransaksiPage> {
   Map transaksi = {};
   List detail = [];
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   @override
   void initState() {
@@ -49,15 +55,7 @@ class DetailTransaksiPageState extends State<DetailTransaksiPage> {
               children: [
                 ListTile(
                   title: Text("Nama: ${transaksi['name']}"),
-                  subtitle: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Agar teks rata kiri
-                    children: [
-                      Text("Transaksi #${transaksi['id_transaksi']}"),
-                      Text(
-                          "Status: ${transaksi['status_pembayaran']}"), // Menambahkan kalimat baru di bawah
-                    ],
-                  ),
+                  subtitle: Text("Tanggal: ${transaksi['tanggal']}"),
                 ),
                 Divider(),
                 Expanded(
@@ -70,14 +68,14 @@ class DetailTransaksiPageState extends State<DetailTransaksiPage> {
                             '$baseUrl/static/images/${item['gambar']}'),
                         title: Text(item['nama']),
                         subtitle: Text("Qty: ${item['jumlah']}"),
-                        trailing: Text("Rp ${item['subtotal']}"),
+                        trailing: Text(formatRupiah(item['subtotal'])),
                       );
                     },
                   ),
                 ),
                 ListTile(
                   title: Text("Status: ${transaksi['status_pembayaran']}"),
-                  subtitle: Text("Total: Rp ${getTotal()}"),
+                  subtitle: Text("Total: ${formatRupiah(getTotal())}"),
                 ),
               ],
             ),

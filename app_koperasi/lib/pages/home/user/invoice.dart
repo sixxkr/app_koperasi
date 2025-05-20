@@ -3,6 +3,7 @@ import 'package:app_koperasi/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class InvoicePage extends StatefulWidget {
   final int idTransaksi;
@@ -16,6 +17,11 @@ class InvoicePage extends StatefulWidget {
 class _InvoicePageState extends State<InvoicePage> {
   Map transaksi = {};
   List detail = [];
+  String formatRupiah(dynamic angka) {
+    final formatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    return formatter.format(angka);
+  }
 
   @override
   void initState() {
@@ -62,14 +68,14 @@ class _InvoicePageState extends State<InvoicePage> {
                             '$baseUrl/static/images/${item['gambar']}'),
                         title: Text(item['nama']),
                         subtitle: Text("Qty: ${item['jumlah']}"),
-                        trailing: Text("Rp ${item['subtotal']}"),
+                        trailing: Text(formatRupiah(item['subtotal'])),
                       );
                     },
                   ),
                 ),
                 ListTile(
                   title: Text("Status: ${transaksi['status_pembayaran']}"),
-                  subtitle: Text("Total: Rp ${getTotal()}"),
+                  subtitle: Text("Total: ${formatRupiah(getTotal())}"),
                 ),
               ],
             ),
