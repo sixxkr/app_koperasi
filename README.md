@@ -48,9 +48,15 @@ python app.py
 ### 2. Frontend (Flutter)
 
 ```bash
-cd frontend
+cd app_koperasi
 flutter pub get
 flutter run
+```
+
+### 3. Database (MySQL)
+
+```bash
+mysql -u root -p db_koperasi < path/ke/db_koperasi.sql
 ```
 
 > Ganti IP `http://10.0.2.2:5000` di Flutter jika menggunakan device fisik
@@ -59,7 +65,6 @@ flutter run
 
 ## 🧪 Endpoint API (Contoh)
 
-<<<<<<< HEAD
 | Method | Endpoint               | Deskripsi                |
 | ------ | ---------------------- | ------------------------ |
 | GET    | /produk                | Ambil semua produk       |
@@ -70,18 +75,16 @@ flutter run
 | POST   | /transaksi             | Lanjutkan ke transaksi   |
 | GET    | /transaksi/<id>        | Riwayat transaksi        |
 | GET    | /transaksi/detail/<id> | Lihat detail transaksi   |
-=======
-| Method | Endpoint        | Deskripsi                |
-| ------ | --------------- | ------------------------ |
-| GET    | /produk         | Ambil semua produk       |
-| POST   | /register       | Registrasi pengguna      |
-| POST   | /login          | Login & terima token     |
-| POST   | /checkout       | Tambah ke keranjang      |
-| GET    | /keranjang/<id> | Ambil isi keranjang user |
-| POST   | /transaksi      | Lanjutkan ke transaksi   |
-| GET    | /transaksi/<id> | Riwayat transaksi        |
-| GET    | /transaksi/detail/<id>   | Lihat detail transaksi   |
->>>>>>> 7f72ac10b8d462a1ebda614a72205816868db763
+| Method | Endpoint               | Deskripsi                |
+| ------ | ---------------        | ------------------------ |
+| GET    | /produk                | Ambil semua produk       |
+| POST   | /register              | Registrasi pengguna      |
+| POST   | /login                 | Login & terima token     |
+| POST   | /checkout              | Tambah ke keranjang      |
+| GET    | /keranjang/<id>        | Ambil isi keranjang user |
+| POST   | /transaksi             | Lanjutkan ke transaksi   |
+| GET    | /transaksi/<id>        | Riwayat transaksi        |
+| GET    | /transaksi/detail/<id> | Lihat detail transaksi   |
 
 ---
 
@@ -126,6 +129,28 @@ CREATE TABLE produk (
 
 ---
 
+## 📋 APK
+
+> app_koperasi/build/app/outputs/flutter-apk/
+
+### 📦 Jenis File APK yang Dihasilkan
+
+| File                          | Keterangan                                           |
+| ----------------------------- | ---------------------------------------------------- |
+| `app-release.apk`             | Versi release — siap untuk distribusi/manual install |
+| `app-debug.apk`               | Versi debug — untuk keperluan pengujian              |
+| `app-arm64-v8a-release.apk`   | APK untuk perangkat ARM 64-bit (split-per-abi)       |
+| `app-armeabi-v7a-release.apk` | APK untuk perangkat ARM 32-bit (split-per-abi)       |
+
+### 🔧 Cara Build APK
+
+Build standar (versi release):
+
+```bash
+flutter build apk
+
+
 ## 👨‍💻 Authors
 
-- [@sixxkr](https://www.github.com/sixxkr)
+- [Karsten Errando Winoto(@sixxkr)](https://www.github.com/sixxkr)
+```
