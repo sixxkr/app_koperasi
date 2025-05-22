@@ -147,10 +147,11 @@ CREATE TABLE produk (
 Build standar (versi release):
 
 ```bash
+flutter doctor
+flutter clean
 flutter build apk
-
+```
 
 ## 👨‍💻 Authors
 
 - [Karsten Errando Winoto(@sixxkr)](https://www.github.com/sixxkr)
-```
